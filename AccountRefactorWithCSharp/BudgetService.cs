@@ -19,10 +19,8 @@ public class BudgetService
 
         if (start.ToString("yyyyMM") != end.ToString("yyyyMM"))
         {
-            var temp = start.AddMonths(1);
-            // rename variable: nextMonthFirst -> currentMonth
-            // Rider 使用 Shift + F6 可以重新命名 - IntelliJ IDEA的快捷鍵配置
-            var currentMonth = new DateTime(temp.Year, temp.Month, 1);
+            // change currentMonth assignment, 等義寫法，減少一個不必要的變數，少一行code
+            var currentMonth = new DateTime(start.Year, start.Month, 1).AddMonths(1);
             var sum = 0;
             while (currentMonth < new DateTime(end.Year, end.Month, 1))
             {
