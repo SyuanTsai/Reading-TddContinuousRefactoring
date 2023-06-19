@@ -24,7 +24,6 @@ public class BudgetService
             while (currentMonth < new DateTime(end.Year, end.Month, 1))
             {
                 var budget = GetBudget(budgets, $"{currentMonth:yyyyMM}");
-                // 加括號
                 if (budget != null)
                 {
                     sum += budget.Amount;
@@ -32,10 +31,11 @@ public class BudgetService
                 currentMonth = currentMonth.AddMonths(1);
             }
 
+            // 把 start 的放一起，end 的放一起；看出來重複性。
             var startBudget = GetBudget(budgets, start.ToString("yyyyMM"));
-            var endBudget = GetBudget(budgets, end.ToString("yyyyMM"));
-
             var startBudgetPerDay = startBudget?.Amount / startMonthDays ?? 0;
+
+            var endBudget = GetBudget(budgets, end.ToString("yyyyMM"));
             var endBudgetPerDay = endBudget?.Amount / endMonthDays ?? 0;
 
             sum += startBudgetPerDay * (startMonthDays - start.Day + 1) + endBudgetPerDay * (end.Day);
