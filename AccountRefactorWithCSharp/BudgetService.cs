@@ -20,17 +20,18 @@ public class BudgetService
             var sum = 0;
             while (currentMonth < new DateTime(end.Year, end.Month, 1))
             {
+                // 移除重複宣告跟取值的 startBudget ，reuse 外層的 budget 變數
                 var budget = GetBudget(budgets, currentMonth.ToString("yyyyMM"));
                 if (budget != null)
                 {
                     if (currentMonth.ToString("yyyyMM") == start.ToString("yyyyMM"))
                     {
-                        var startBudget = GetBudget(budgets, start.ToString("yyyyMM"));
+                        // var startBudget = GetBudget(budgets, start.ToString("yyyyMM"));
                         var startMonthDays = DateTime.DaysInMonth(start.Year, start.Month);
                         int startBudgetPerDay;
-                        if (startBudget != null)
+                        if (budget != null)
                         {
-                            startBudgetPerDay = startBudget.Amount / startMonthDays;
+                            startBudgetPerDay = budget.Amount / startMonthDays;
                         }
                         else
                         {
