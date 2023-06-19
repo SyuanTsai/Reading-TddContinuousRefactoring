@@ -20,23 +20,17 @@ public class BudgetService
             var sum = 0;
             while (currentMonth < new DateTime(end.Year, end.Month, 1))
             {
-                // 移除重複宣告跟取值的 startBudget ，reuse 外層的 budget 變數
                 var budget = GetBudget(budgets, currentMonth.ToString("yyyyMM"));
                 if (budget != null)
                 {
                     if (currentMonth.ToString("yyyyMM") == start.ToString("yyyyMM"))
                     {
-                        // var startBudget = GetBudget(budgets, start.ToString("yyyyMM"));
+                        // 移除重複的 budget null 檢查
                         var startMonthDays = DateTime.DaysInMonth(start.Year, start.Month);
                         int startBudgetPerDay;
-                        if (budget != null)
-                        {
-                            startBudgetPerDay = budget.Amount / startMonthDays;
-                        }
-                        else
-                        {
-                            startBudgetPerDay = 0;
-                        }
+                        // Rider 會警告 Expression is always true  => (budget != null)
+                        // Alt + Enter => replace 'if' statement with respective branch - IntelliJ IDEA的快捷鍵配置
+                        startBudgetPerDay = budget.Amount / startMonthDays;
 
                         var amountOfStart = startBudgetPerDay * (startMonthDays - start.Day + 1);
                         sum += amountOfStart;
