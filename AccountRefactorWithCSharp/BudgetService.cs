@@ -25,12 +25,11 @@ public class BudgetService
                 {
                     if (currentMonth.ToString("yyyyMM") == start.ToString("yyyyMM"))
                     {
-                        // 移除重複的 budget null 檢查
+
                         var startMonthDays = DateTime.DaysInMonth(start.Year, start.Month);
-                        int startBudgetPerDay;
-                        // Rider 會警告 Expression is always true  => (budget != null)
-                        // Alt + Enter => replace 'if' statement with respective branch - IntelliJ IDEA的快捷鍵配置
-                        startBudgetPerDay = budget.Amount / startMonthDays;
+                        // join 變數的宣告與 assignment 減少行數
+                        // Alt + Enter => join declaration and assignment - IntelliJ IDEA的快捷鍵配置
+                        var startBudgetPerDay = budget.Amount / startMonthDays;
 
                         var amountOfStart = startBudgetPerDay * (startMonthDays - start.Day + 1);
                         sum += amountOfStart;
