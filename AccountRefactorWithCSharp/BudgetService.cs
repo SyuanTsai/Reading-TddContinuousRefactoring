@@ -14,21 +14,21 @@ public class BudgetService
     {
         var budgets = _budgetRepo.GetAll();
 
-        // inline variables: startYearMonth and endYearMonth
-        // Rider 使用 Ctrl + Alt + N 會自動 inline - IntelliJ IDEA的快捷鍵配置
         var startMonthDays = DateTime.DaysInMonth(start.Year, start.Month);
         var endMonthDays = DateTime.DaysInMonth(end.Year, end.Month);
 
         if (start.ToString("yyyyMM") != end.ToString("yyyyMM"))
         {
             var temp = start.AddMonths(1);
-            var nextMonthFirst = new DateTime(temp.Year, temp.Month, 1);
+            // rename variable: nextMonthFirst -> currentMonth
+            // Rider 使用 Shift + F6 可以重新命名 - IntelliJ IDEA的快捷鍵配置
+            var currentMonth = new DateTime(temp.Year, temp.Month, 1);
             var sum = 0;
-            while (nextMonthFirst < new DateTime(end.Year, end.Month, 1))
+            while (currentMonth < new DateTime(end.Year, end.Month, 1))
             {
-                var budget = GetBudget(budgets, $"{nextMonthFirst:yyyyMM}");
+                var budget = GetBudget(budgets, $"{currentMonth:yyyyMM}");
                 if (budget != null) sum += budget.Amount;
-                nextMonthFirst = nextMonthFirst.AddMonths(1);
+                currentMonth = currentMonth.AddMonths(1);
             }
 
             var startBudget = GetBudget(budgets, start.ToString("yyyyMM"));
