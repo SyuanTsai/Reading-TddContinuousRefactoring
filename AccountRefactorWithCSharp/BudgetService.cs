@@ -19,13 +19,16 @@ public class BudgetService
 
         if (start.ToString("yyyyMM") != end.ToString("yyyyMM"))
         {
-            // change currentMonth assignment, 等義寫法，減少一個不必要的變數，少一行code
             var currentMonth = new DateTime(start.Year, start.Month, 1).AddMonths(1);
             var sum = 0;
             while (currentMonth < new DateTime(end.Year, end.Month, 1))
             {
                 var budget = GetBudget(budgets, $"{currentMonth:yyyyMM}");
-                if (budget != null) sum += budget.Amount;
+                // 加括號
+                if (budget != null)
+                {
+                    sum += budget.Amount;
+                }
                 currentMonth = currentMonth.AddMonths(1);
             }
 
