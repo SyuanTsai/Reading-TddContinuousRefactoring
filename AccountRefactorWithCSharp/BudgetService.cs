@@ -22,7 +22,8 @@ public class BudgetService
             var sum = 0;
             while (currentMonth < new DateTime(end.Year, end.Month, 1))
             {
-                var budget = GetBudget(budgets, $"{currentMonth:yyyyMM}");
+                // 使用一樣的 ToString("yyyyMM") 來突顯重複 code
+                var budget = GetBudget(budgets, currentMonth.ToString("yyyyMM"));
                 if (budget != null)
                 {
                     sum += budget.Amount;
@@ -45,9 +46,6 @@ public class BudgetService
 
             var endBudget = GetBudget(budgets, end.ToString("yyyyMM"));
             var endMonthDays = DateTime.DaysInMonth(end.Year, end.Month);
-            // 把語法糖改成 if condition - Part 2
-            // Step 3
-            // 移除掉 ?? 0 的部分並補上括號
             int endBudgetPerDay;
             if (endBudget != null)
             {
