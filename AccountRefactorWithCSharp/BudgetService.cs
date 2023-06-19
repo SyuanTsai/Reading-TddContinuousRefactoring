@@ -14,6 +14,7 @@ public class BudgetService
     {
         var budgets = _budgetRepo.GetAll();
 
+        // inline variables: startYearMonth and endYearMonth
         var startYearMonth = start.ToString("yyyyMM");
         var endYearMonth = end.ToString("yyyyMM");
         var startMonthDays = DateTime.DaysInMonth(start.Year, start.Month);
