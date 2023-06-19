@@ -33,11 +33,13 @@ public class BudgetService
             var startBudget = GetBudget(budgets, start.ToString("yyyyMM"));
             var startMonthDays = DateTime.DaysInMonth(start.Year, start.Month);
             // 把語法糖改成 if condition
-            // Step 1
-            // Rider 中在 startBudget? 在?的地方 Alt + Enter，選擇 To Conditional expression
-            // 此時Rider會發出警告 Left operand of the '??' operator must be of reference or nullable type
-            // 暫時不處理，因為關係到下一個步驟。
-            var startBudgetPerDay = startBudget != null ? startBudget.Amount / startMonthDays ?? 0 : 0;
+            // Step 2
+            // Rider 中在 startBudget != null ? 在?的地方 Alt + Enter，選擇 Convert to 'if' statement
+            int startBudgetPerDay;
+            if (startBudget != null)
+                startBudgetPerDay = startBudget.Amount / startMonthDays ?? 0;
+            else
+                startBudgetPerDay = 0;
             var amountOfStart = startBudgetPerDay * (startMonthDays - start.Day + 1);
 
             var endBudget = GetBudget(budgets, end.ToString("yyyyMM"));
