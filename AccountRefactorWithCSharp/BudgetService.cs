@@ -31,14 +31,17 @@ public class BudgetService
                 currentMonth = currentMonth.AddMonths(1);
             }
 
-            // 把 start 的放一起，end 的放一起；看出來重複性。
             var startBudget = GetBudget(budgets, start.ToString("yyyyMM"));
             var startBudgetPerDay = startBudget?.Amount / startMonthDays ?? 0;
+            var amountOfStart = startBudgetPerDay * (startMonthDays - start.Day + 1);
 
             var endBudget = GetBudget(budgets, end.ToString("yyyyMM"));
             var endBudgetPerDay = endBudget?.Amount / endMonthDays ?? 0;
+            var amountOfEnd = endBudgetPerDay * (end.Day);
 
-            sum += startBudgetPerDay * (startMonthDays - start.Day + 1) + endBudgetPerDay * (end.Day);
+            // introduce variables: amountOfStart and amountOfEnd
+            // 藉由提取計算過程，更清晰地理解sum的計算過程。
+            sum += amountOfStart + amountOfEnd;
             return sum;
         }
 
