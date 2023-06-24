@@ -18,7 +18,7 @@ public class BudgetService
         {
             var currentMonth = start;
             var sum = 0;
-            while (currentMonth < new DateTime(end.Year, end.Month, 1))
+            while (currentMonth < new DateTime(end.Year, end.Month, 1).AddMonths(1))
             {
                 var budget = GetBudget(budgets, currentMonth.ToString("yyyyMM"));
                 if (budget != null)
@@ -27,12 +27,28 @@ public class BudgetService
                     {
 
                         var startMonthDays = DateTime.DaysInMonth(start.Year, start.Month);
-                        // join 變數的宣告與 assignment 減少行數
-                        // Alt + Enter => join declaration and assignment - IntelliJ IDEA的快捷鍵配置
                         var startBudgetPerDay = budget.Amount / startMonthDays;
 
                         var amountOfStart = startBudgetPerDay * (startMonthDays - start.Day + 1);
                         sum += amountOfStart;
+                    }
+                    // 把 end budget 的算法搬進 while loop 裡面
+                    else if(currentMonth.ToString("yyyyMM") == end.ToString("yyyyMM"))
+                    {
+                        var endBudget = GetBudget(budgets, end.ToString("yyyyMM"));
+                        var endMonthDays = DateTime.DaysInMonth(end.Year, end.Month);
+                        int endBudgetPerDay;
+                        if (endBudget != null)
+                        {
+                            endBudgetPerDay = endBudget.Amount / endMonthDays;
+                        }
+                        else
+                        {
+                            endBudgetPerDay = 0;
+                        }
+
+                        var amountOfEnd = endBudgetPerDay * (end.Day);
+                        sum += amountOfEnd;
                     }
                     else
                     {
@@ -42,20 +58,20 @@ public class BudgetService
                 currentMonth = currentMonth.AddMonths(1);
             }
 
-            var endBudget = GetBudget(budgets, end.ToString("yyyyMM"));
-            var endMonthDays = DateTime.DaysInMonth(end.Year, end.Month);
-            int endBudgetPerDay;
-            if (endBudget != null)
-            {
-                endBudgetPerDay = endBudget.Amount / endMonthDays;
-            }
-            else
-            {
-                endBudgetPerDay = 0;
-            }
-            var amountOfEnd = endBudgetPerDay * (end.Day);
+            // var endBudget = GetBudget(budgets, end.ToString("yyyyMM"));
+            // var endMonthDays = DateTime.DaysInMonth(end.Year, end.Month);
+            // int endBudgetPerDay;
+            // if (endBudget != null)
+            // {
+            //     endBudgetPerDay = endBudget.Amount / endMonthDays;
+            // }
+            // else
+            // {
+            //     endBudgetPerDay = 0;
+            // }
+            // var amountOfEnd = endBudgetPerDay * (end.Day);
 
-            sum += amountOfEnd;
+            // sum += amountOfEnd;
             return sum;
         }
         else
