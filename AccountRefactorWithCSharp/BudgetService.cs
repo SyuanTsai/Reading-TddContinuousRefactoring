@@ -32,20 +32,13 @@ public class BudgetService
                         var amountOfStart = startBudgetPerDay * (startMonthDays - start.Day + 1);
                         sum += amountOfStart;
                     }
-                    // 把 end budget 的算法搬進 while loop 裡面
                     else if(currentMonth.ToString("yyyyMM") == end.ToString("yyyyMM"))
                     {
-                        // var endBudget = GetBudget(budgets, end.ToString("yyyyMM"));
                         var endMonthDays = DateTime.DaysInMonth(end.Year, end.Month);
-                        int endBudgetPerDay;
-                        if (budget != null)
-                        {
-                            endBudgetPerDay = budget.Amount / endMonthDays;
-                        }
-                        else
-                        {
-                            endBudgetPerDay = 0;
-                        }
+                        // 移除重複的 budget null 檢查
+                        // Rider 會警告 Expression is always true  => (budget != null)
+                        // Alt + Enter => replace 'if' statement with respective branch - IntelliJ IDEA的快捷鍵配置
+                        var endBudgetPerDay = budget.Amount / endMonthDays;
 
                         var amountOfEnd = endBudgetPerDay * (end.Day);
                         sum += amountOfEnd;
