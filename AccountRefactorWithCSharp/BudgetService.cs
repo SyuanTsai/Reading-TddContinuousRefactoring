@@ -28,22 +28,19 @@ public class BudgetService
                         var startMonthDays = DateTime.DaysInMonth(start.Year, start.Month);
                         var dailyAmount = budget.Amount / startMonthDays;
 
-                        // 選擇 (startMonthDays - start.Day + 1)
-                        // Alt + Enter => Introduce variable
+                        // inline variables: amountOfStart and amountOfEnd
+                        // Rider 使用 Ctrl + Alt + N 會自動 inline - IntelliJ IDEA的快捷鍵配置
                         var overlappingDays = (startMonthDays - start.Day + 1);
-                        var amountOfStart = dailyAmount * overlappingDays;
-                        sum += amountOfStart;
+                        sum += dailyAmount * overlappingDays;
                     }
                     else if(currentMonth.ToString("yyyyMM") == end.ToString("yyyyMM"))
                     {
                         var endMonthDays = DateTime.DaysInMonth(end.Year, end.Month);
                         var dailyAmount = budget.Amount / endMonthDays;
 
-                        // 選擇 (end.Day)
-                        // Alt + Enter => Introduce variable
                         var overlappingDays = (end.Day);
-                        var amountOfEnd = dailyAmount * overlappingDays;
-                        sum += amountOfEnd;
+                        // Rider 使用 Ctrl + Alt + N 會自動 inline - IntelliJ IDEA的快捷鍵配置
+                        sum += dailyAmount * overlappingDays;
                     }
                     else
                     {
