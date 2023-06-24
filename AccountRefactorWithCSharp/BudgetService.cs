@@ -28,9 +28,8 @@ public class BudgetService
                         var startMonthDays = DateTime.DaysInMonth(start.Year, start.Month);
                         var dailyAmount = budget.Amount / startMonthDays;
 
-                        // inline variables: amountOfStart and amountOfEnd
-                        // Rider 使用 Ctrl + Alt + N 會自動 inline - IntelliJ IDEA的快捷鍵配置
-                        var overlappingDays = (startMonthDays - start.Day + 1);
+                        // Remove Redundant parentheses
+                        var overlappingDays = startMonthDays - start.Day + 1;
                         sum += dailyAmount * overlappingDays;
                     }
                     else if(currentMonth.ToString("yyyyMM") == end.ToString("yyyyMM"))
@@ -38,8 +37,7 @@ public class BudgetService
                         var endMonthDays = DateTime.DaysInMonth(end.Year, end.Month);
                         var dailyAmount = budget.Amount / endMonthDays;
 
-                        var overlappingDays = (end.Day);
-                        // Rider 使用 Ctrl + Alt + N 會自動 inline - IntelliJ IDEA的快捷鍵配置
+                        var overlappingDays = end.Day;
                         sum += dailyAmount * overlappingDays;
                     }
                     else
