@@ -25,22 +25,18 @@ public class BudgetService
                 {
                     if (currentMonth.ToString("yyyyMM") == start.ToString("yyyyMM"))
                     {
-
                         var startMonthDays = DateTime.DaysInMonth(start.Year, start.Month);
-                        var startBudgetPerDay = budget.Amount / startMonthDays;
+                        var dailyAmount = budget.Amount / startMonthDays;
 
-                        var amountOfStart = startBudgetPerDay * (startMonthDays - start.Day + 1);
+                        var amountOfStart = dailyAmount * (startMonthDays - start.Day + 1);
                         sum += amountOfStart;
                     }
                     else if(currentMonth.ToString("yyyyMM") == end.ToString("yyyyMM"))
                     {
                         var endMonthDays = DateTime.DaysInMonth(end.Year, end.Month);
-                        // 移除重複的 budget null 檢查
-                        // Rider 會警告 Expression is always true  => (budget != null)
-                        // Alt + Enter => replace 'if' statement with respective branch - IntelliJ IDEA的快捷鍵配置
-                        var endBudgetPerDay = budget.Amount / endMonthDays;
+                        var dailyAmount = budget.Amount / endMonthDays;
 
-                        var amountOfEnd = endBudgetPerDay * (end.Day);
+                        var amountOfEnd = dailyAmount * (end.Day);
                         sum += amountOfEnd;
                     }
                     else
@@ -50,21 +46,6 @@ public class BudgetService
                 }
                 currentMonth = currentMonth.AddMonths(1);
             }
-
-            // var endBudget = GetBudget(budgets, end.ToString("yyyyMM"));
-            // var endMonthDays = DateTime.DaysInMonth(end.Year, end.Month);
-            // int endBudgetPerDay;
-            // if (endBudget != null)
-            // {
-            //     endBudgetPerDay = endBudget.Amount / endMonthDays;
-            // }
-            // else
-            // {
-            //     endBudgetPerDay = 0;
-            // }
-            // var amountOfEnd = endBudgetPerDay * (end.Day);
-
-            // sum += amountOfEnd;
             return sum;
         }
         else
